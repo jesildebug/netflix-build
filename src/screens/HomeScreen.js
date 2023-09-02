@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
 import "./HomeScreen.css"
-import Nav from './Nav'
-import Banner from './Banner'
-import Row from './Row';
-import "./App.css"
-import requests from './Request';
+import Nav from '../Nav'
+import Banner from '../Banner'
+import Row from '../Row';
+import "../App.css"
+import requests from '../Request';
 
 
 
 const HomeScreen = () => {
+
   return (
     <div className='homeScreen'>
       <Nav/>
