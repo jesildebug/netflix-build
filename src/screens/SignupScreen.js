@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import './SignupScreen.css'
-// import { createUserWithEmailAndPassword } from "firebase/auth"
 import { auth } from '../firebase';
+import { createUserWithEmailAndPassword,signInWithEmailAndPassword} from "firebase/auth";
 
 function SignupScreen() {
   const emailRef = useRef(null);
@@ -10,9 +10,7 @@ function SignupScreen() {
   const register = (e) => {
     e.preventDefault();
 
-
-
-    auth.createUserWithEmailAndPassword(  
+  createUserWithEmailAndPassword(auth,
       emailRef.current.value,
       passwordRef.current.value
     ).then((authUser) => {
@@ -24,24 +22,36 @@ function SignupScreen() {
 
   const signIn = (e) => {
     e.preventDefault(); // Prevent the form submission
-    // Your sign in logic here
+     
+    signInWithEmailAndPassword(auth,
+      emailRef.current.value,
+      passwordRef.current.value
+    )
+    .then((authUser) => {
+      console.log(authUser);
+    }).catch((error) => {
+      alert(error.message);
+    });
   }
+  
+    return (
+      <div className='signupScreen'>
+        <form>
+          <h1>Sign In</h1>
+          <input ref={emailRef} placeholder='Email' type='email'/>
+          <input ref={passwordRef} placeholder='Password' type='password'/>
+          <button type='submit' onClick={signIn }>Sign In</button>
+          <h4>
+            <span className='signupScreen__grey'>New to Netflix? </span>
+            <span className='signupScreen__link' onClick={register}>Sign Up now.</span>
+          </h4>
+        </form>
+      </div>
+    )
+  }
+         
 
-  return (
-    <div className='signupScreen'>
-      <form>
-        <h1>Sign Up</h1>
-        <input ref={emailRef} placeholder='Email' type='email'/>
-        <input ref={passwordRef} placeholder='Password' type='password'/>
-        <button type='submit' onClick={signIn}>Sign In</button>
-        <h4>
-          <span className='signupScreen__grey'>New to Netflix? </span>
-          <span className='signupScreen__link' onClick={register}>Sign up now.</span>
-        </h4>
-      </form>
-    </div>
-  )
-}
+  export default SignupScreen;
+  
 
-export default SignupScreen;
 
